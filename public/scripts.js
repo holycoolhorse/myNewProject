@@ -1,29 +1,31 @@
 document.addEventListener('DOMContentLoaded', loadMessages);
 
 async function loadMessages() {
-  const response = await fetch('/messages');
-  const data = await response.json();
-  const messagesContainer = document.getElementById('messagesContainer');
-  messagesContainer.innerHTML = '';
-  data.forEach(msg => {
-    const div = document.createElement('div');
-    div.className = 'message';
-    div.textContent = `${msg.text} — ${new Date(msg.createdAt).toLocaleString()}`;
-    messagesContainer.appendChild(div);
-  });
+    const response = await fetch('/messages');
+    const messages = await response.json();
+    const messagesContainer = document.getElementById('messagesContainer');
+
+    messagesContainer.innerHTML = '';
+    messages.forEach(msg => {
+        const div = document.createElement('div');
+        div.className = 'message';
+        div.textContent = `${msg.text} — ${new Date(msg.createdAt).toLocaleString()}`;
+        messagesContainer.appendChild(div);
+    });
 }
 
 async function postMessage() {
-  const messageInput = document.getElementById('messageInput');
-  if (messageInput.value.trim() !== '') {
-    const response = await fetch('/messages', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ text: messageInput.value })
-    });
-    if (response.ok) {
-      messageInput.value = '';
-      loadMessages();
+    const messageInput = document.getElementById('messageInput');
+    if (messageInput.value.trim() !== '') {
+        const response = await fetch('/messages', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ text: messageInput.value })
+        });
+
+        if (response.ok) {
+            messageInput.value = '';
+            loadMessages();
+        }
     }
-  }
 }
