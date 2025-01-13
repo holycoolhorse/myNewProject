@@ -9,13 +9,14 @@ async function loadMessages() {
     messages.forEach(msg => {
         const div = document.createElement('div');
         div.className = 'message';
-        div.textContent = `${msg.text} — ${new Date(msg.createdAt).toLocaleString()}`;
+        div.innerHTML = `<span class="username">${msg.username}:</span> ${msg.text} — ${new Date(msg.createdAt).toLocaleString()}`;
         messagesContainer.appendChild(div);
     });
 }
 
 async function postMessage() {
     const messageInput = document.getElementById('messageInput');
+
     if (messageInput.value.trim() !== '') {
         const response = await fetch('/messages', {
             method: 'POST',
