@@ -2,7 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
 const session = require('express-session');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs'); // bcrypt yerine bcryptjs kullanıyoruz
 const app = express();
 const port = process.env.PORT || 3000;
 
